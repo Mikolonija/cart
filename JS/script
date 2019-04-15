@@ -1,0 +1,46 @@
+
+        $(document).ready(e => {
+            console.log('add');
+            if (localStorage.getItem('cart')) {
+                let items = JSON.parse(localStorage.getItem('cart'));
+                if (items.length != 0) {
+                    items.forEach(item => {
+                        $('#chart-items').append("<li class='list-group-item'>" + item.item + "</li> ");
+                    });
+                } else {
+                    $('#chart-items').html('<h5>Add items</h5>');
+                }
+            } else {
+                localStorage.setItem('cart', JSON.stringify([]));
+                $('#chart-items').html('<h5>Add items</h5>');
+            }
+        })
+
+        $('#chrt_add').on('click', () => {
+
+            let items = JSON.parse(localStorage.getItem('cart'));
+            let item = $('#item').val();
+
+            if (items.length == 0) {
+                $('#chart-items').html('');
+            }
+            if (item.length != 0) {
+                items.push({
+                    id: items.length,
+                    item: item
+                });
+                $('#chart-items').append("<li class='list-group-item'>" + item + " </li> ");
+            } else {
+                alert('please add item');
+            }
+            localStorage.setItem('cart', JSON.stringify(items));
+            $('#item').val('');
+        });
+
+
+
+        $('#chrt_clear').on('click', () => {
+            localStorage.setItem('cart', JSON.stringify([]));
+            $('#chart-items').html('<h5>Add items</h5>');
+        });
+
